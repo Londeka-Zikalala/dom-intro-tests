@@ -50,10 +50,62 @@ describe(' calculating the input call and sms strings', function(){
 
 describe('Critical and warning level tests', function(){
     it('should return the class name of "warning" when the total reaches R30', function(){
-
+        var radioBill = radioBillFunction();
+        radioBill.makeCall();
+        radioBill.makeCall();
+        radioBill.makeCall();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.sendSms();
+        radioBill.sendSms();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        assert.equal(radioBill.theClassName(), 'warning')
     })
 
     it('should return the class name of "critical" when the total reaches R50', function(){
-        
+        var radioBill = radioBillFunction();
+        radioBill.makeCall();
+        radioBill.makeCall();
+        radioBill.makeCall();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.sendSms();
+        radioBill.sendSms();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        radioBill.makeCall();
+        radioBill.sendSms();
+        assert.equal(radioBill.theClassName(), 'critical')
     })
 })
