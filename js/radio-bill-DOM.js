@@ -1,50 +1,41 @@
-// get a reference to the sms or call total elements
-const callsTotalTwoElem = document.querySelector('.callTotalTwo');
-const smsTotalTwoElem = document.querySelector('.smsTotalTwo');
-const totalCostTwoElem = document.querySelector('.totalTwo');
-
-// get a reference to the add button
+const callsTotalElem = document.querySelector('.callTotal');
+const smsTotalElem = document.querySelector('.smsTotal');
+const totalCostElem = document.querySelector('.total');
 const radioBillAddBtn = document.querySelector('.radioBillAddBtn');
 
-//create a variable that will keep track of the total bill
-const textTotalAddBtnElem = document.querySelector('.textTotalAddBtn')
-//in the event listener get the value from the billItemTypeRadio radio buttons
-// * add the appropriate value to the running total
-// * add nothing for invalid values that is not 'call' or 'sms'.
-// * display the latest total on the screen
-var callsTotalTwo = 0;
-var smsTotalTwo = 0;
+const radioBill = radioBillFunction();
 
 function radioBillTotal(){
-    var checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
+    const checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
     if (checkedRadioBtn){
-        var billItemType = checkedRadioBtn.value
+        const billItemType = checkedRadioBtn.value
         // billItemType will be 'call' or 'sms'
         if (billItemType === "call"){
-            callsTotalTwo+= 2.75
+            radioBill.makeCall();
         }
         else if (billItemType === "sms"){
-            smsTotalTwo += 0.75;
+            radioBill.sendSms();
         }
     }
    
     //update the totals that is displayed on the screen.
-    callsTotalTwoElem.innerHTML = callsTotalTwo.toFixed(2);
-    smsTotalTwoElem.innerHTML = smsTotalTwo.toFixed(2);
-    var totalCostTwo = callsTotalTwo + smsTotalTwo;
-    totalCostTwoElem.innerHTML = totalCostTwo.toFixed(2);
+    callsTotalElem.innerHTML = radioBill.getCallCostTot().toFixed(2);
+    smsTotalElem.innerHTML = radioBill.getSmsCostTot().toFixed(2);
+    totalCostElem.innerHTML = radioBill.roundOff();
     
-    if (totalCostTwo >= 50){
-        // adding the danger class will make the text red
-        totalCostTwoElem.classList.add("danger");
-        totalCostTwoElem.classList.remove("warning");
+    const totalCost = totalCostElem.innerHTML;
+    if (totalCost >= radioBill.getCriticalLevel()){
+        
+        totalCostElem.classList.add("danger");
+        totalCostElem.classList.remove("warning");
     }
-    else if (totalCostTwo >= 30){
-        totalCostTwoElem.classList.add("warning");
-        totalCostTwoElem.classList.remove("danger");
+    else if (totalCost >= radioBill.getWarningLevel()){
+        totalCostElem.classList.add("warning");
+        totalCostElem.classList.remove("danger");
     }
     else{
-        totalCostTwoElem.classList.remove("warning", "danger")
+        totalCostElem.classList.remove("warning", "danger")
     }
 }
-radioBillAddBtn.addEventListener('click', radioBillTotal)
+
+radioBillAddBtn.addEventListener('click', radioBillTotal);
