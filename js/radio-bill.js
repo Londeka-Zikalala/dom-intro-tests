@@ -26,7 +26,7 @@ function sendSms(){
   }
 
 function getCallCostTot(){
-    return  makeCall();
+    return  makeCall()
 }
 function getSmsCostTot(){
     return sendSms()
@@ -34,7 +34,9 @@ function getSmsCostTot(){
 function getTheTotal(){
     return getCallCostTot() + getSmsCostTot();
 }
-
+function roundOff(){
+    return getTheTotal().toFixed(2);
+}
 function theClassName(){
     if(getTheTotal() >= criticalLevl ){
         return 'critical'
@@ -51,6 +53,7 @@ return{
     getTheTotal,
     sendSms,
     makeCall,
-    theClassName
+    theClassName,
+    roundOff
 }
 }

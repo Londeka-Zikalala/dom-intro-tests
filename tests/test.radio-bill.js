@@ -13,6 +13,18 @@ describe('the radio bill function', function(){
 })
 
 describe(' calculating the input call and sms strings', function(){
+    it('should round off the total to 2 decimal places', function(){
+        var radioBill = radioBillFunction();
+            radioBill.makeCall();
+            radioBill.makeCall();
+            radioBill.makeCall();
+            radioBill.makeCall();
+            radioBill.sendSms();
+            radioBill.sendSms();
+            radioBill.sendSms();
+            radioBill.sendSms();
+            assert.equal(radioBill.roundOff(), 17.50)
+        })
     it('should calculate the total calls costing 2.75 each', function(){
         var radioBill = radioBillFunction();
         radioBill.makeCall();
@@ -42,11 +54,11 @@ describe(' calculating the input call and sms strings', function(){
         radioBill.sendSms();
         radioBill.sendSms();
         radioBill.sendSms();
-        assert.equal(radioBill.getTheTotal(), 17.50)
+        assert.equal(radioBill.roundOff(), 17.50)
     })
 
-    
 })
+    
 
 describe('Critical and warning level tests', function(){
     it('should return the class name of "warning" when the total reaches R30', function(){
@@ -67,6 +79,7 @@ describe('Critical and warning level tests', function(){
         radioBill.sendSms();
         radioBill.makeCall();
         radioBill.sendSms();
+        assert.equal(radioBill.roundOff(), 31.50  )
         assert.equal(radioBill.theClassName(), 'warning')
     })
 
@@ -98,14 +111,9 @@ describe('Critical and warning level tests', function(){
         radioBill.sendSms();
         radioBill.makeCall();
         radioBill.sendSms();
-        radioBill.makeCall();
-        radioBill.sendSms();
-        radioBill.makeCall();
-        radioBill.sendSms();
-        radioBill.makeCall();
-        radioBill.sendSms();
-        radioBill.makeCall();
-        radioBill.sendSms();
+        radioBill.sendSms()
+        radioBill.sendSms()
+        assert.equal(radioBill.roundOff(),50.50)
         assert.equal(radioBill.theClassName(), 'critical')
     })
 })

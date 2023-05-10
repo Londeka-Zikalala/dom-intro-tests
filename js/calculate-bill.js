@@ -50,15 +50,20 @@ return addSmses(transformed)
  function getTotal(transformed){
   return getCallTotal(transformed) + getSmsTotal(transformed)
  }
-
- function className(transformed){
- 
-    if(getTotal(transformed) >= critical ){
+function roundOff(transformed){
+  return getTotal(transformed).toFixed(2);
+}
+ function classCritical(transformed){
+    if(roundOff(transformed) >= critical ){
       return 'critical'
-    } else if(getTotal(transformed) >= warning){
-      return 'warning'
-    }
-  
+    } 
+ }
+
+ function classWarning(transformed){
+
+  if(roundOff(transformed) >= warning){
+    return 'warning'
+  }
  }
   return{
     billStringFunction,
@@ -68,7 +73,9 @@ return addSmses(transformed)
     getCallTotal,
     getSmsTotal,
     getTotal,
-    className
+    roundOff,
+    classCritical,
+    classWarning
 
 
   
