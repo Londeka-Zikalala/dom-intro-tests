@@ -115,7 +115,7 @@ describe('Critical and warning level tests', function(){
         
 
         assert.equal(criticalLevelSettingsBill.getTotalCost(), 21.6)
-        assert.equal(criticalLevelSettingsBill.totalClassName(), 'critical')
+        assert.equal(criticalLevelSettingsBill.totalClassName(), 'danger')
     })
     it('should stop adding the calls once the critical level is reached', function(){
         let criticalLevelSettingsBill = billWithSettings();
@@ -139,7 +139,7 @@ describe('Critical and warning level tests', function(){
         
 
         assert.equal(criticalLevelSettingsBill.getTotalCost(), 25.2)
-        assert.equal(criticalLevelSettingsBill.totalClassName(), 'critical')
+        assert.equal(criticalLevelSettingsBill.totalClassName(), 'danger')
     })
     it('should continue adding the sms and call total costs after the critical level has been increased', function(){
          let criticalLevelSettingsBill = billWithSettings();
@@ -163,7 +163,7 @@ describe('Critical and warning level tests', function(){
         
 
         assert.equal(criticalLevelSettingsBill.getTotalCost(), 25.2);
-        assert.equal(criticalLevelSettingsBill.totalClassName(), 'critical');
+        assert.equal(criticalLevelSettingsBill.totalClassName(), 'danger');
 
         criticalLevelSettingsBill.setCriticalLevel(30);
         criticalLevelSettingsBill.sendAnSms();

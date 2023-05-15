@@ -1,9 +1,9 @@
-const callsTotalElem = document.querySelector('.callTotal');
-const smsTotalElem = document.querySelector('.smsTotal');
-const totalCostElem = document.querySelector('.total');
-const radioBillAddBtn = document.querySelector('.radioBillAddBtn');
+let callsTotalElemR = document.querySelector('.callTotalTwo');
+let smsTotalElemR = document.querySelector('.smsTotalTwo');
+let totalCostElement = document.querySelector('.totalTwo');
+let radioBillAddBtnR = document.querySelector('.radioBillAddBtn');
 
-const radioBill = radioBillFunction();
+let radioBill = radioBillFunction();
 
 function radioBillTotal(){
     const checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
@@ -11,31 +11,36 @@ function radioBillTotal(){
         const billItemType = checkedRadioBtn.value
         // billItemType will be 'call' or 'sms'
         if (billItemType === "call"){
-            radioBill.makeCall();
+            radioBill.makeCall(billItemType);
         }
         else if (billItemType === "sms"){
-            radioBill.sendSms();
+            radioBill.sendSms(billItemType);
         }
     }
    
     //update the totals that is displayed on the screen.
-    callsTotalElem.innerHTML = radioBill.getCallCostTot().toFixed(2);
-    smsTotalElem.innerHTML = radioBill.getSmsCostTot().toFixed(2);
-    totalCostElem.innerHTML = radioBill.roundOff();
+    callsTotalElemR.innerHTML = radioBill.getCallCostTot().toFixed(2);
+    smsTotalElemR.innerHTML = radioBill.getSmsCostTot().toFixed(2);
+    totalCostElement.innerHTML = radioBill.getTheTotal().toFixed(2);
     
-    const totalCost = totalCostElem.innerHTML;
-    if (totalCost >= radioBill.getCriticalLevel()){
+  //  const totalCost = totalCostElement.innerHTML;
+
+    totalCostElement.classList.remove("warning");
+    totalCostElement.classList.remove("danger");
+    totalCostElement.classList.add(radioBill.theClassName())
+
+    /*if (totalCost >= radioBill.getCriticalLevel()){
         
-        totalCostElem.classList.add("danger");
-        totalCostElem.classList.remove("warning");
+        totalCostElement.classList.add("danger");
+        totalCostElement.classList.remove("warning");
     }
     else if (totalCost >= radioBill.getWarningLevel()){
-        totalCostElem.classList.add("warning");
-        totalCostElem.classList.remove("danger");
+        totalCostElement.classList.add("warning");
+        totalCostElement.classList.remove("danger");
     }
     else{
-        totalCostElem.classList.remove("warning", "danger")
-    }
+        totalCostElement.classList.remove("warning", "danger")
+    }*/
 }
 
-radioBillAddBtn.addEventListener('click', radioBillTotal);
+radioBillAddBtnR.addEventListener('click', radioBillTotal);

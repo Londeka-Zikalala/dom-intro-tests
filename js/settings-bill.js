@@ -47,11 +47,11 @@ function sendAnSms(){
 }
 
 function getSmsCostTotal(){
-  return totalSmsCost.toFixed(2);
+  return totalSmsCost;
 }
 function getTotalCost(){
   totalCost = totalSmsCost + totalCallCost;
-  return totalCost.toFixed(2);
+  return totalCost;
 }
 
 function hasReachedCriticalLevel() {
@@ -66,7 +66,7 @@ totalCallCost += theCallCost;
 function totalClassName(){
   if(hasReachedCriticalLevel())
   {
-    return 'critical'
+    return 'danger'
   }
    if(getTotalCost() >= getWarningLevel()){
     return 'warning'

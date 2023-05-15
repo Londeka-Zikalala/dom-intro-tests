@@ -1,59 +1,60 @@
-function radioBillFunction(){
-var callCost = 2.75;
-var smsCost = 0.75;
-var someSms = 0;
-var someCall = 0;
-var criticalLevl = 50;
-var warningLvl = 30;
+function radioBillFunction() {
+
+    var smsTotal = 0;
+    var callTotal = 0;
+    var criticalLevl = 50;
+    var warningLvl = 30;
 
 
-function getCallCost(){
-    someCall = callCost;
-    return someCall
-}
-function getSmsCost(){
-    someSms = smsCost;
-    return someSms
-}
-function sendSms(){
-   
-    someSms += smsCost;
-    return someSms;
-  }
-  function makeCall(){
-    someCall += callCost;
-    return someCall;
-  }
-
-function getCallCostTot(){
-    return  makeCall()
-}
-function getSmsCostTot(){
-    return sendSms()
-}
-function getTheTotal(){
-    return getCallCostTot() + getSmsCostTot();
-}
-function roundOff(){
-    return getTheTotal().toFixed(2);
-}
-function theClassName(){
-    if(getTheTotal() >= criticalLevl ){
-        return 'critical'
-    } else if(getTheTotal() >= warningLvl){
-        return 'warning'
+    function getCallCost() {
+        return 2.75
     }
-}
+    function getSmsCost() {
+      
+        return 0.75
+    }
 
-return{
-    getCallCost,
-    getSmsCost,
-    getCallCostTot,
-    getSmsCostTot,
-    getTheTotal,
-    sendSms,
-    makeCall,
-    theClassName,
-    roundOff
-}
+    function sendSms(bill) {
+if(bill === 'sms'){
+    smsTotal += 0.75
+}   
+    }
+
+    function makeCall(bill) {
+        if (bill === 'call') {
+            callTotal += 2.75
+        }
+    }
+
+    function getCallCostTot() {
+        return callTotal
+    }
+    function getSmsCostTot() {
+        return smsTotal
+    }
+    function getTheTotal() {
+        return callTotal + smsTotal
+    }
+   /* function roundOff() {
+        return getTheTotal().toFixed(2);
+    }*/
+    function theClassName() {
+        if (getTheTotal() >= criticalLevl) {
+            return 'danger'
+        } else if (getTheTotal() >= warningLvl) {
+            return 'warning'
+        }
+    }
+
+    return {
+        getCallCost,
+        getSmsCost,
+        getCallCostTot,
+        getSmsCostTot,
+        getTheTotal,
+        sendSms,
+        makeCall,
+        theClassName,
+        
+    }
 }

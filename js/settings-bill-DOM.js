@@ -11,16 +11,11 @@ const criticalLevelSettingElem = document.querySelector('.criticalLevelSetting')
 const billWithSettingsAddBtn = document.querySelector('.billWithSettingsAddBtn');
 //get a reference to the 'Update settings' button
 const updateSettingsBtn = document.querySelector('.updateSettings');
-// create a variables that will keep track of all the settings
-    var callCostSetting = 0;
-    var smsCostSetting = 0;
-    var warningLevelSetting = 0;
-    var criticalLevelSetting = 0;
 
-// create a variables that will keep track of all three totals.
-var callsTotalThree = 0;
-var smsTotalThree = 0;
-var totalCostThree = 0;
+    const billWithSettingsDOM = billWithSettings();
+  
+
+
 //add an event listener for when the 'Update settings' button is pressed
 //updateSettingsBtn.addEventListener(click, function())
 //add an event listener for when the add button is pressed
@@ -31,31 +26,16 @@ var totalCostThree = 0;
 // * display the latest total on the screen.
 // * check the value thresholds and display the total value in the right color.
 function updateBillWithSettings(){
-     callCostSetting = Number(callCostSettingElem.value);
-     smsCostSetting = Number(smsCostSettingElem.value);
-     warningLevelSetting = Number(warningLevelSettingElem.value);
-    criticalLevelSetting = Number(criticalLevelSettingElem.value);
+    billWithSettingsDOM.setCallCost(Number(callCostSettingElem.value));
+     billWithSettingsDOM.setSmsCost(Number(smsCostSettingElem.value));
+     billWithSettingsDOM.setWarningLevel(warningLevelSettingElem.value);
+    billWithSettingsDOM.setCriticalLevel(criticalLevelSettingElem.value);
 
-    totalCostThree = callsTotalThree + smsTotalThree;
-    callTotalSettingsElem.innerHTML = callsTotalThree.toFixed(2);
-    smsTotalSettingsElem.innerHTML = smsTotalThree.toFixed(2);
-    totalSettingsElem.innerHTML = totalCostThree.toFixed(2);
-    warningLevelSettingElem.innerHTML = warningLevelSetting;
-    criticalLevelSettingElem.innerHTML = criticalLevelSetting;
+   
+    totalSettingsElem.classList.remove("warning");
+    totalSettingsElem.classList.remove("danger");
+    totalSettingsElem.classList.add(billWithSettingsDOM.totalClassName());
   
-    if (totalCostThree >= criticalLevelSetting) {
-      totalSettingsElem.classList.remove("warning");
-      totalSettingsElem.classList.add("danger");
-      billWithSettingsAddBtn.removeEventListener('click', billWithSettingsTotal)
-    } else{
-      billWithSettingsAddBtn.addEventListener('click', billWithSettingsTotal)
-      if (totalCostThree >= warningLevelSetting) {
-      totalSettingsElem.classList.remove("danger");
-      totalSettingsElem.classList.add("warning");
-    } else {
-      totalSettingsElem.classList.remove("warning", "danger");
-    }
-  }
 } 
 function billWithSettingsTotal(){
     var checkedRadioBtn = document.querySelector("input[name='billItemTypeWithSettings']:checked");
@@ -63,37 +43,31 @@ function billWithSettingsTotal(){
 
         var billItemTypeWithSettings = checkedRadioBtn.value
         // billItemTypeWithSettings will be 'call' or 'sms'
+        console.log(billItemTypeWithSettings)
         if (billItemTypeWithSettings === "call"){
-            callsTotalThree += callCostSetting
+            billWithSettingsDOM.makeACall()
         }
         else if (billItemTypeWithSettings === "sms"){
-            smsTotalThree += smsCostSetting;
+            billWithSettingsDOM.sendAnSms()
         }
+        
     }    
    //update totals
-    totalCostThree = callsTotalThree + smsTotalThree;
-  callTotalSettingsElem.innerHTML = callsTotalThree.toFixed(2);
-  smsTotalSettingsElem.innerHTML = smsTotalThree.toFixed(2);
-  totalSettingsElem.innerHTML = totalCostThree.toFixed(2);
-  warningLevelSettingElem.innerHTML = warningLevelSetting;
-  criticalLevelSettingElem.innerHTML = criticalLevelSetting;
 
-    
-   if (totalCostThree >= criticalLevelSetting) {
+   callTotalSettingsElem.innerHTML = billWithSettingsDOM.getCallCostTotal();
+   smsTotalSettingsElem.innerHTML = billWithSettingsDOM.getSmsCostTotal().toFixed(2);
+   totalSettingsElem.innerHTML = billWithSettingsDOM.getTotalCost().toFixed(2);
+   warningLevelSettingElem.innerHTML = billWithSettingsDOM.getWarningLevel();
+   criticalLevelSettingElem.innerHTML = billWithSettingsDOM.getCriticalLevel();
 
-    totalSettingsElem.classList.remove("warning");
-    totalSettingsElem.classList.add("danger");
-    billWithSettingsAddBtn.removeEventListener('click', billWithSettingsTotal)
-  } else{
-    billWithSettingsAddBtn.addEventListener('click', billWithSettingsTotal)
-    if (totalCostThree >= warningLevelSetting) {
-    totalSettingsElem.classList.remove("danger");
-    totalSettingsElem.classList.add("warning");
-  } else {
-    totalSettingsElem.classList.remove("warning", "danger");
-  }
-}
+   totalSettingsElem.classList.remove("warning");
+   totalSettingsElem.classList.remove("danger");
+   totalSettingsElem.classList.add(billWithSettingsDOM.totalClassName());
+
+
+
+
 }
 
-
-updateSettingsBtn.addEventListener('click',updateBillWithSettings);
+billWithSettingsAddBtn.addEventListener('click', billWithSettingsTotal)
+updateSettingsBtn.addEventListener('click', updateBillWithSettings);

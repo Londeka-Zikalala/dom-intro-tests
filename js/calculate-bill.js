@@ -1,10 +1,6 @@
 function calculateBills(){
-  var callCost = 2.75;
-  var smsCost = 0.75;
   var theSms = 0;
   var theCall = 0
-  var critical = 30;
-  var warning = 20;
   var trimmedString = [];
   var calculateBillString = '';
 
@@ -23,59 +19,59 @@ function calculateBills(){
  }
   return transformed
  }
- function addCalls(transformed){
+
+ function makeACall(transformed){
   for(var i = 0; i<transformed.length;i++){
     if(transformed[i]=== 'call'){
-      theCall += callCost
+      theCall += 2.75
     }
   } return theCall
  }
 
- function addSmses(transformed){
-  
+ function makeAnSms(transformed){
   for(var i = 0;i <transformed.length; i++){
     if(transformed[i] === 'sms'){
-      theSms += smsCost;
+      theSms += 0.75;
     }
-  }return theSms
+  } return theSms
  }
  
- function getCallTotal(transformed){
-return addCalls(transformed)
- }
-
- function getSmsTotal(transformed){
-return addSmses(transformed)
- }
- function getTotal(transformed){
-  return getCallTotal(transformed) + getSmsTotal(transformed)
- }
-function roundOff(transformed){
-  return getTotal(transformed).toFixed(2);
-}
- function classCritical(transformed){
-    if(roundOff(transformed) >= critical ){
-      return 'critical'
-    } 
- }
-
- function classWarning(transformed){
-
-  if(roundOff(transformed) >= warning){
-    return 'warning'
+ function getTotal() {
+  var total = 0;
+  if(theCall > 0 && theSms > 0) {
+    total = theCall + theSms
   }
+ else if(theSms <= 0) {
+    total += theCall;
+  } else if( theCall <= 0){
+    total += theSms
+  }
+  return total;
+}
+
+
+ function classes(){
+    if(getTotal() >= 30 ){
+      return 'danger'
+    }  else if(getTotal() >= 20){
+      return 'warning'
+    }
  }
+
+ function reset(){
+  theCall = 0;
+  theSms = 0;
+ }
+
+
   return{
     billStringFunction,
     textTransform,
-    addCalls,
-    addSmses,
-    getCallTotal,
-    getSmsTotal,
+    makeACall,
+    makeAnSms,
     getTotal,
-    roundOff,
-    classCritical,
-    classWarning
+    classes,
+    reset
 
 
   
